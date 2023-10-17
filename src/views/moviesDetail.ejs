@@ -19,7 +19,10 @@
     <p>RELEASE DATE: <%= movie.release_date %> </p>
     <p>Genero: <%= movie.genre ? movie.genre.name : "Sin especificar" %></p>
     <br>
-    
+    <h3>Actores:</h3>
+    <% movie.actors.forEach(actor => { %>
+        <p><%= actor.first_name %> <%= actor.last_name %></p>
+    <% }) %>
     <section>
         <a href="/movies/edit/<%= movie.id %>"><button class="botonAgregar"   type="submit">Editar</button></a>
         <a href="/movies/delete/<%= movie.id %>"><button class="botonAgregar"   type="submit">Borrar</button></a>

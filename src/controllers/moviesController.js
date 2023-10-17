@@ -14,21 +14,21 @@ const Actors = db.Actor;
 
 
 const moviesController = {
-    'list': (req, res) => {
+    list: (req, res) => {
         db.Movie.findAll()
             .then(movies => {
-                res.render('moviesList.ejs', {movies})
+               return res.render('moviesList.ejs', {movies})
             })
     },
-    'detail': (req, res) => {
+    detail: (req, res) => {
         db.Movie.findByPk(req.params.id, {
-            include: ['genre']
+            include: ['genre', 'actors']
         })
             .then(movie => {
-                res.render('moviesDetail.ejs', {movie});
+                return res.render('moviesDetail.ejs', {movie});
             });
     },
-    'new': (req, res) => {
+    new: (req, res) => {
         db.Movie.findAll({
             order : [
                 ['release_date', 'DESC']
@@ -39,7 +39,7 @@ const moviesController = {
                 res.render('newestMovies', {movies});
             });
     },
-    'recomended': (req, res) => {
+    recomended: (req, res) => {
         db.Movie.findAll({
             where: {
                 rating: {[db.Sequelize.Op.gte] : 8}
