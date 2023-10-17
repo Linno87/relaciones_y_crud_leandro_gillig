@@ -35,6 +35,12 @@
                     <% }); %>
                 </select>
             </p>
+            <div>
+                <% movie.actors.forEach(actor => { %>
+                   <h4><%= actor.first_name %> , <%= actor.last_name %></h4>
+                <% }); %>
+            </div>
+
             <br>
             <p> <button class="botonAgregar" type="submit">Agregar</button>
             
