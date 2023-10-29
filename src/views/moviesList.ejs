@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Películas</title>
-    <link rel='stylesheet' href='/css/style.css' />
-
-</head>
+<%- include('./partials/head.ejs',{title: 'Listado de peliculas'}) %>
 
 <body>
     <figure>
@@ -20,15 +14,92 @@
         <a class="botonVolver" href="/">inicio</a>
 
     </p>
-    <br>
-    <ul>
-        <% for( let i = 0; i < movies.length; i++ ) { %>
-        <li>
-            <a href="/movies/detail/<%= movies[i].id %>"><%= movies[i].title %></a>
-        </li>
-        <% } %>
+    <table class="table table-hover">
+        <thead>
+          <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Duración</th>
+            <th scope="col"> Administrar</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% movies.forEach((movie,index) => { %>
+                <tr>
+                    <th scope="row" class="text-center"> <%= index + 1 %></th>
+                    <td class="px-5"><%= movie.title %></td>
+                    <td class="text-center"><%= movie.genre ? movie.genre.name : "Sin especificar" %></td>
+                    <td class="text-center"><%= movie.length ? movie.length + ' min' : 'Sin especificar'%></td>
+                    <td>
+                      <div class="d-flex gap-2">
+                        <a href="/movies/detail/<%= movie.id %>"><button
+                                type="button"
+                                class="btn btn-sm  btn-primary">
+                                <i class="fas fa-eye"></i>
+                            </button></a>
+                            <a href="/movies/edit/<%= movie.id %>"
+                                class="btn btn-sm btn-success">
+                                <i class="fas fa-edit"></i>
+                            </a>
 
-    </ul>
+                            <button type="button"
+                                class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalDelete<%= movie.id%>">
+                                <i class="fas fa-trash"></i>
+                            </button>
+
+                            <div class="modal fade" id="modalDelete<%= movie.id%>"
+                                tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="main-admin-header">
+                                            <div
+                                                class="modal-header main-admin-header">
+                                                <h5 class="modal-title modal-advertencia">
+                                                    Advertencia</h5>
+                                                <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-body modal-body-background">
+                                            <p>Vas a eliminar el producto
+                                                <b><%= movie.title%>,</b> ¿Estas
+                                                seguro?
+                                            </p>
+                                        </div>
+                                        <div class="main-admin-header">
+                                            <div
+                                            class="modal-footer main-admin-header">
+                                            <button type="button"
+                                                class="btn btn-primary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <form
+                                                action="/movies/delete/<%= movie.id %>?_method=DELETE"
+                                                method="POST">
+                                                <button type="submit"
+                                                    class="btn btn-danger">Eliminar
+                                                </button>
+                                            </form>
+                                        </div>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            <% }) %>
+          <tr>
+         
+        </tbody>
+      </table>
+      <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

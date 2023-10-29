@@ -3,30 +3,32 @@ const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
 const moment = require('moment');
+const { error } = require('console');
 
 //Aqui tienen una forma de llamar a cada uno de los modelos
 // const {Movies,Genres,Actor} = require('../database/models');
 
-//Aquí tienen otra forma de llamar a los modelos creados
-const Movies = db.Movie;
-const Genres = db.Genre;
-const Actors = db.Actor;
+
 
 
 const moviesController = {
     list: (req, res) => {
-        db.Movie.findAll()
+        db.Movie.findAll({
+            include: ['genre'],
+        })
             .then(movies => {
-              return   res.render('moviesList.ejs', {movies})
+              return   res.render('moviesList', {movies})
             })
+            .catch(error=>console.log(error))
     },
     detail: (req, res) => {
         db.Movie.findByPk(req.params.id, {
-            include: ['genre','actors']
+            include: ['genre','actors'],
         })
             .then(movie => {
-               return res.render('moviesDetail.ejs', {movie});
-            });
+               return res.render('moviesDetail', {movie});
+            })
+            .catch(error=>console.log(error))
     },
     new: (req, res) => {
         db.Movie.findAll({
