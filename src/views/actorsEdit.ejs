@@ -8,9 +8,9 @@
     <div class="card col-10 mx-auto">
         <div class="card-header text-center text-bg-success d-flex justify-content-between align-items-center">
         <a href="/actors"><button class="btn btn-primary mx-2">Volver</button></a>
-            <h1>Crear actor</h1>
+            <h1>Editando datos personales de <%= actors.first_name %>, <%= actors.last_name %></h1>
         </div>
-        <form class="card-body" action="/actors/create" method="POST">
+        <form class="card-body" action="/actors/update/<%= actors.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <blockquote class="blockquote mb-0">
                 <div class="d-flex ">
                     <div class="col-12 col-md-4 imagen">
@@ -21,33 +21,33 @@
                     <div class="col-12 col-md-8 fs-6">
                             <div class ="mb-3 col-12 d-flex align-items-center">
                                 <label for="first_name" class="px-2">NOMBRE</label>
-                                <input type="text" class="form-control" name="first_name" id="first_name" value="" required>
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="<%= actors.first_name %>" required>
                             </div>
                             <div class ="mb-3 col-12 d-flex align-items-center">
                                 <label for="last_name" class="px-2">APELLIDO</label>
-                                <input type="text" class="form-control" name="last_name" id="last_name" value="" required>
+                                <input type="text" class="form-control" name="last_name" id="last_name" value="<%= actors.last_name %>" required>
                             </div>
                             
                             <div class="col-6 mx-auto d-flex align-items-center">
                                     <label for="rating" class="px-2">RATING </label>
-                                    <input type="number" class="form-control" name="rating" id="rating" value="" required>
+                                    <input type="number" class="form-control" name="rating" id="rating" value="<%= actors.rating %>" required>
                             </div>
                             <div class="mb-3 mt-2 col-12 d-flex align-items-center">
                                 <label for="favorite_movie_id" class="w-50 p-2">PELÍCULA FAVORITA</label>
                                 <select name="favorite_movie_id" class="form-control" id="favorite_movie_id" required>
                                     <% movies.forEach(movie => { %>
-                                    <option value="<%= movie.id %>"><%= movie.title %></option>
+                                    <option value="<%= movie.id %>" <%= (actors.favorite_movie_id === movie.id) && 'selected' %>><%= movie.title %></option>
                                      <% }); %>
                                 </select>
                             </div>
                     </div>
                 </div>
-                <div class="mb-3 col-12 p-2">
-                    <div class="row">
+                <div class="mb-3 col-12 m-2 border">
+                    <div class="row p-2">
                         <% movies.forEach(movie => { %>
                         <div class="col-12 col-md-4">
                                 <div class="form-check">
-                                <input name="movies" class="form-check-input" type="checkbox" value="<%= movie.id %>" id='movie<%= movie.id %>' />
+                                <input name="movies" class="form-check-input" type="checkbox" <%= actors.movies.map(movie => movie.id).includes(movie.id) && 'checked' %> value="<%= movie.id %>" id='movie<%= movie.id %>' />
                                    <label class="form-check-label" for='movie<%= movie.id %>'>
                                      <%= movie.title %>
                                     </label>
@@ -58,7 +58,7 @@
                 </div>
                 
                 <div class="col-12 d-flex justify-content-end align-items-center py-2">
-                        <a href="/actors"><button class="btn btn-success mx-2"   type="submit">Agregar</button></a>
+                        <a href="/actors/edit/<%= actors.id %>"><button class="btn btn-success mx-2"   type="submit">Editar</button></a>
                         <button class="btn btn-danger mx-2"   type="reset">Cancelar</button>
                     
                 </div>

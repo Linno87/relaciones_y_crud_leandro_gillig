@@ -109,6 +109,7 @@ const moviesController = {
         .catch(error => console.log(error))
     },
     edit: function(req, res) {
+
         const allGenres = db.Genre.findAll({
             order : ['name']
         })
@@ -137,7 +138,7 @@ const moviesController = {
     },
     update: function (req,res) {
         let {title, rating, awards, release_date, length, genre_id, actors} = req.body;
-
+        
         actors = typeof actors === 'string' ? [actors] : actors
 
         
