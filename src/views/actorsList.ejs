@@ -5,43 +5,39 @@
 
 <body class="bg-primary-subtle">
     <%- include('./partials/header.ejs',{title: 'Listado de peliculas'}) %>
-    
+    <div class="col-8 mx-auto">
     <div class="col-12 d-flex justify-content-center">
         <h1>LISTADO DE PELÍCULAS</h1>
     </div>
     <div class="col-12 col-md-3 mb-2">
         
-        <a href="/movies/add"><button class="btn btn-success">Agregar Pelicula</button></a>
+        <a href="actors/add"><button class="btn btn-success">Agregar actor</button></a>
         
     </div>
         
-
-    
     <table class="table table-hover">
         <thead>
           <tr class="text-center">
             <th scope="col">#</th>
-            <th scope="col">Titulo</th>
-            <th scope="col">Genero</th>
-            <th scope="col">Duración</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ranking</th>
             <th scope="col"> Administrar</th>
           </tr>
         </thead>
         <tbody>
-            <% movies.forEach((movie,index) => { %>
+            <% actors.forEach((actor,index) => { %>
                 <tr>
                     <th scope="row" class="text-center"> <%= index + 1 %></th>
-                    <td class="px-5"><%= movie.title %></td>
-                    <td class="text-center"><%= movie.genre ? movie.genre.name : "Sin especificar" %></td>
-                    <td class="text-center"><%= movie.length ? movie.length + ' min' : 'Sin especificar'%></td>
+                    <td class="px-5 text-center"><%= actor.first_name %> , <%= actor.last_name %></td>
+                    <td class="text-center"><%= actor.ranking ? actor.ranking : 'Sin especificar'%></td>
                     <td>
                       <div class="d-flex gap-2">
-                        <a href="/movies/detail/<%= movie.id %>"><button
+                        <a href="/actors/detail/<%= actor.id %>"><button
                                 type="button"
                                 class="btn btn-sm  btn-primary">
                                 <i class="fas fa-eye"></i>
                             </button></a>
-                            <a href="/movies/edit/<%= movie.id %>"
+                            <a href="/actors/edit/<%= actor.id %>"
                                 class="btn btn-sm btn-success">
                                 <i class="fas fa-edit"></i>
                             </a>
@@ -49,11 +45,11 @@
                             <button type="button"
                                 class="btn btn-sm btn-danger"
                                 data-bs-toggle="modal"
-                                data-bs-target="#movie<%= movie.id%>">
+                                data-bs-target="#actor<%= actor.id%>">
                                 <i class="fas fa-trash"></i>
                             </button>
 
-                            <div class="modal" id="movie<%= movie.id%>"
+                            <div class="modal" id="actor<%= actor.id%>"
                                 tabindex="-1">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -70,8 +66,8 @@
                                         </div>
 
                                         <div class="modal-body modal-body-background">
-                                            <p>Vas a eliminar la pelicula
-                                                <b><%= movie.title%>,</b> ¿Estas
+                                            <p>Vas a eliminar el actor
+                                                <b><%= actor.first_name%>, <%= actor.last_name%></b> ¿Estas
                                                 seguro?
                                             </p>
                                         </div>
@@ -82,7 +78,7 @@
                                                 class="btn btn-primary"
                                                 data-bs-dismiss="modal">Cancelar</button>
                                             <form
-                                                action="/movies/delete/<%= movie.id %>?_method=DELETE"
+                                                action="/actors/delete/<%= actor.id %>?_method=DELETE"
                                                 method="POST">
                                                 <button type="submit"
                                                     class="btn btn-danger">Eliminar
@@ -102,6 +98,7 @@
          
         </tbody>
       </table>
+    </div>
       <%- include('./partials/footer.ejs') %>
 </body>
 

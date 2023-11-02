@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('./partials/head.ejs',{title: 'Agregar pelicula'}) %>
+
+<body>
+    <%- include('./partials/header.ejs') %>
+    <div class="card col-10 mx-auto">
+        <div class="card-header text-center text-bg-success d-flex justify-content-between align-items-center">
+        <a href="actors"><button class="btn btn-primary mx-2">Volver</button></a>
+            <h1>Crear actor</h1>
+        </div>
+        <form class="card-body" action="/actors/create" method="POST" enctype="multipart/form-data">
+            <blockquote class="blockquote mb-0">
+                <div class="d-flex ">
+                    <div class="col-12 col-md-4 imagen">
+                        <img class="img-fluid imagen_form" src="/img/actors/default-image.jpg" alt="">
+                        <label for="image" class="btn btn-success btn_edit">Agregar imagen
+                        <input hidden class="form-control" type="file" id="image" name="image"></label>
+                    </div>
+                    <div class="col-12 col-md-8 fs-6">
+                            <div class ="mb-3 col-12 d-flex align-items-center">
+                                <label for="first_name" class="px-2">NOMBRE</label>
+                                <input type="text" class="form-control" name="first_name" id="first_name" value="" required>
+                            </div>
+                            <div class ="mb-3 col-12 d-flex align-items-center">
+                                <label for="last_name" class="px-2">APELLIDO</label>
+                                <input type="text" class="form-control" name="last_name" id="last_name" value="" required>
+                            </div>
+                            
+                            <div class="col-6 mx-auto d-flex align-items-center">
+                                    <label for="rating" class="px-2">RATING </label>
+                                    <input type="number" class="form-control" name="rating" id="rating" value="" required>
+                            </div>
+                            <div class="mb-3 mt-2 col-12 d-flex align-items-center">
+                                <label for="favorite" class="w-50 p-2">PELÍCULA FAVORITA</label>
+                                <input type="number" class="form-control" name="favorite" id="favorite" value="" required>
+                            </div>
+                    </div>
+                </div>
+                <div class="mb-3 col-12 p-2">
+                    <div class="row">
+                        <% movies.forEach(movie => { %>
+                        <div class="col-12 col-md-4">
+                                <div class="form-check">
+                                <input name="movies" class="form-check-input" type="checkbox" value="<%= movie.id %>" id='movie<%= movie.id %>' />
+                                   <label class="form-check-label" for='movie<%= movie.id %>'>
+                                     <%= movie.title %>
+                                    </label>
+                                </div>
+                        </div>
+                        <% }); %>
+                    </div>
+                </div>
+                
+                <div class="col-12 d-flex justify-content-end align-items-center py-2">
+                        <a href="/movies"><button class="btn btn-success mx-2"   type="submit">Agregar</button></a>
+                        <button class="btn btn-danger mx-2"   type="reset">Cancelar</button>
+                    
+                </div>
+              </blockquote>
+        </form>
+    </section>
+    
+</body>
+
+</html>

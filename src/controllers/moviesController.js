@@ -76,7 +76,10 @@ const moviesController = {
         .catch(error=>console.log(error))
     },
     create: function (req, res) {
-        const {title, rating, awards, release_date, length, genre_id} = req.body;
+        let {title, rating, awards, release_date, length, genre_id, actors} = req.body;
+
+        actors = typeof actors === 'string' ? [actors] : actors
+
         db.Movie.create({
             title: title.trim(),
             rating,
@@ -85,10 +88,24 @@ const moviesController = {
             length,
             genre_id
         })
-        .then(
-            movie=>{
-                console.log(movie);
-                return res.redirect('/movies')     })
+        .then(movie=>{
+
+            if(actors){
+                const actorsDB = actors.map(actor=>{
+                    return {
+                        movie_id: movie.id,
+                        actor_id: actor
+                    }
+                })
+                db.Actor_Movie.bulkCreate(actorsDB,{
+                    validate: true
+                })
+                .then((response)=>{
+                    console.log(response);
+                })
+            }
+            return res.redirect('/movies/detail/' + movie.id)
+        })
         .catch(error => console.log(error))
     },
     edit: function(req, res) {
@@ -119,9 +136,14 @@ const moviesController = {
         .catch(error => console.log(error))
     },
     update: function (req,res) {
-        const {title, rating, awards, release_date, length, genre_id, actors} = req.body;
+        let {title, rating, awards, release_date, length, genre_id, actors} = req.body;
+
+        actors = typeof actors === 'string' ? [actors] : actors
+
+        
+
         db.Movie.update({
-            title: title.trim(),
+            title: title,
             rating,
             awards,
             release_date,
@@ -160,17 +182,8 @@ const moviesController = {
        .catch(error => console.log(error))
        .finally(()=>res.redirect('/movies/detail/' + req.params.id))
     },
-    delete: function (req, res) {
-        db.Movie.findByPk(req.params.id)
-        .then(movie =>{
-            return res.render('moviesDelete',{
-                Movie: movie,
-            })
-        })
-        .catch(error => console.log(error))
-    },
     destroy: function (req, res) {
-        db.ActorMovie.destroy({
+        db.Actor_Movie.destroy({
             where: {
                 movie_id: req.params.id 
             }

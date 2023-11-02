@@ -43,3 +43,39 @@ figure{
   margin: auto;
   width: 20%;
 }
+
+.imagen {
+  position: relative;
+}
+
+.btn_edit{
+  position: absolute;
+  bottom: 16px;
+  left: 7px;
+  color: var(--Rojo);
+}
+
+.bodyImg {
+  background-image: url("../img/index.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.btn_index{
+  width: 200px;
+  height: 100px;
+  border-radius: 20px;
+  background-color:bisque;
+}
+.btn_index i{
+  font-size: 70px;
+  color: black;
+}
+
+.btn_index:hover{
+  box-shadow: 0px 0px 10px  black;
+}
+.imagen_form {
+ 
+  max-height: 300px;
+}

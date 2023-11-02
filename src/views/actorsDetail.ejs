@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs',{title: 'Actor'}) %>
+<body>
+    <%- include('./partials/header.ejs') %>
+    <div class="card col-10 mx-auto">
+        <div class="card-header text-center text-bg-success">
+            <h1><%= actor.last_name.toUpperCase()%> ,<%= actor.first_name%> </h1>
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <div class="d-flex ">
+                <div class="col-12 col-md-4 ">
+                    <img class="img-fluid imagen_form" src="/img/actors/<%= actor.image || "default-image.jpg" %>" alt="">
+                </div>
+                <div class="col-12 col-md-8">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                                <h5 ><b>RATING:</b> <%= actor.rating %></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 ><b>PELICULA FAVORITA:</b> <%= actor.favorite.title %></h5>
+                        </li>
+                        <li class="list-group-item">
+                            <h5 class="fw-bold">Peliculas en las que participó:</h5>
+                            <ul class="list-group list-group-flush">
+                            <% if (actor.movies.length){ %>
+                                <% actor.movies.forEach(movie =>{ %>
+                                    <li class="list-group-item fs-5 ps-5"> <%= movie.title %></li>     
+                                <%})%>
+                            <%}else{ %>
+                                <p>No ah trabajado en peliculas</p>
+                            <%}%>
+                            </ul>
+                        </li>
+                      </ul>
+                </div>
+               
+            </div>
+            <div class="col-12 d-flex justify-content-between py-2">
+                <a href="/actors"><button class="btn btn-primary mx-2"   type="submit">Volver</button></a>
+                <div class="d-flex justify-content-end">
+                    <a href="/actors/edit/<%= actor.id %>"><button class="btn btn-success mx-2"   type="submit">Editar</button></a>
+                    <a href="/actors/delete/<%= actor.id %>"><button class="btn btn-danger mx-2"   type="submit">Borrar</button></a>
+                </div>
+            </div>
+          </blockquote>
+        </div>
+      </div>
+</body>
+</html>

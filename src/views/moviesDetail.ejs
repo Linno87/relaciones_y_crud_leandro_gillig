@@ -2,6 +2,7 @@
 <html lang="en">
 <%- include('./partials/head.ejs',{title: movie.title}) %>
 <body>
+    <%- include('./partials/header.ejs') %>
     <div class="card col-10 mx-auto">
         <div class="card-header text-center text-bg-success">
             <h1><%= movie.title.toUpperCase() %> </h1>
@@ -10,7 +11,7 @@
           <blockquote class="blockquote mb-0">
             <div class="d-flex ">
                 <div class="col-12 col-md-4">
-                    <img class="img-fluid" src="/img/<%= movie.image || "default-image.jpg" %>" alt="">
+                    <img class="img-fluid" src="/img/movies/<%= movie.image || "default-image.jpg" %>" alt="">
                 </div>
                 <div class="col-12 col-md-8">
                     <ul class="list-group list-group-flush">
