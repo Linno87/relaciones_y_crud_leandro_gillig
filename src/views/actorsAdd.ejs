@@ -34,7 +34,11 @@
                             </div>
                             <div class="mb-3 mt-2 col-12 d-flex align-items-center">
                                 <label for="favorite" class="w-50 p-2">PELÍCULA FAVORITA</label>
-                                <input type="number" class="form-control" name="favorite" id="favorite" value="" required>
+                                <select name="favorite" class="form-control" id="favorite" required>
+                                    <% movies.forEach(movie => { %>
+                                    <option value="<%= movie.id %>"><%= movie.title %></option>
+                                     <% }); %>
+                                </select>
                             </div>
                     </div>
                 </div>
